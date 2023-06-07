@@ -1,11 +1,10 @@
-import { Typography,Box } from "@mui/material";
-// import Dropdown from "../component/Packreq";
+import { Typography, Box } from "@mui/material";
+
 import ListPackTable from "../component/ListPack"
 function Home() {
-    return (  
+    return (
         <Box sx={styles.columnsContainer}>
-            <ListPackTable/>
-        {/* <Dropdown/> */}
+            <ListPackTable />
         </Box>
     );
 }
@@ -18,10 +17,11 @@ export default Home;
 
 const styles = {
     columnsContainer: {
-       
-        display:"flex",
-        align:"center",
-    
-        position:"absolute",
-        left:280,
-    }}
+
+        display: "flex",
+        align: "center",
+
+        position: "absolute",
+        left: 280,
+    }
+}

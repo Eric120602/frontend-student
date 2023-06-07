@@ -6,32 +6,30 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useState,useEffect } from 'react';
-import {getListpack}  from '../api/users';
+import { useState, useEffect } from 'react';
+import { getListpack } from '../api/users';
 import { Link } from 'react-router-dom';
 
 export default function ListPackTable() {
-  const [packs, setPacks]=useState([])
-  useEffect(()=>{
+  const [packs, setPacks] = useState([])
+  useEffect(() => {
     loadpacks()
-  },[])
-  const loadpacks=async()=>{
-   console.log("Ethi")
-    try{
-      const response=await getListpack()
+  }, [])
+  const loadpacks = async () => {
+    console.log("Ethi")
+    try {
+      const response = await getListpack()
       setPacks(response)
 
     }
-    catch(error){
-      console.log("unexpected error occured" ,error)
+    catch (error) {
+      console.log("unexpected error occured", error)
     }
   }
 
-
-
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 550}} aria-label="simple table">
+      <Table sx={{ minWidth: 550 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>

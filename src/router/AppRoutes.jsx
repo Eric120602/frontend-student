@@ -7,13 +7,13 @@ import Trainerdetails from '../containers/Trainerdetails';
 
 const AppRoutes = () => {
     return <Routes>
-        
+
         <Route path='/Home' element={<Home />} />
-        <Route path='/Home/buypack' element={<BuyPack/>} />
+        <Route path='/Home/buypack' element={<BuyPack />} />
         <Route path='/Trainerdetails' element={<Trainerdetails />} />
         <Route path='/Schedule' element={<Schedule />} />
         <Route path='/Learnerdetails' element={<Learnerdetails />} />
-        
+
     </Routes>
 };
 

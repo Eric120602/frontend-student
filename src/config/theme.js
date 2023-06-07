@@ -16,7 +16,7 @@ let theme = createTheme({
             normal: grey[700],
             main: grey[900],
         },
-        green :{
+        green: {
             main: green[800]
         },
     }
@@ -44,10 +44,10 @@ theme = createTheme(theme, {
             fontSize: '1rem',
         },
         h7: {
-            fontSize: '0.8rem', 
+            fontSize: '0.8rem',
         },
         h8: {
-            fontSize: '0.7rem', 
+            fontSize: '0.7rem',
         }
     },
 });

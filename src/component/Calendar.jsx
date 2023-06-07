@@ -41,10 +41,10 @@ const MyCalendar = () => {
 
   // Sample data for available vehicles based on type
   const vehicleOptions = {
-    2:"two wheeler",
-    3:"three wheeler",
-    4:"four wheeler",
-    5:"Heavy",
+    2: "two wheeler",
+    3: "three wheeler",
+    4: "four wheeler",
+    5: "Heavy",
   };
 
   const handleTypeChange = (e) => {
@@ -55,16 +55,16 @@ const MyCalendar = () => {
     loadVehicleOptions(type)
   };
 
-  const loadVehicleOptions = async(vehicleTypeId) => {
-    try{
-    let params = {}
-    if (vehicleTypeId)
-      params.category = vehicleTypeId
-    let vehicleOptions = await getVehicles(params)
-    setAvailableVehicles(vehicleOptions);
+  const loadVehicleOptions = async (vehicleTypeId) => {
+    try {
+      let params = {}
+      if (vehicleTypeId)
+        params.category = vehicleTypeId
+      let vehicleOptions = await getVehicles(params)
+      setAvailableVehicles(vehicleOptions);
     }
-    catch(exception){
-      console.log("error",exception)
+    catch (exception) {
+      console.log("error", exception)
     }
   }
 
@@ -163,7 +163,7 @@ const MyCalendar = () => {
       {selectedType && (
         <div>
           <label htmlFor="vehicle">Select Vehicle:</label>
-          <select id="vehicle" value={currentEvent.vehicle ? currentEvent.vehicle.id:""} onChange={handleVehicleChange}>
+          <select id="vehicle" value={currentEvent.vehicle ? currentEvent.vehicle.id : ""} onChange={handleVehicleChange}>
             <option value="">Select Vehicle</option>
             {availableVehicles.map((vehicle) => (
               <option key={vehicle.id} value={vehicle.id}>

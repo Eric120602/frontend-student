@@ -8,27 +8,27 @@ import '@fontsource/roboto/700.css';
 import theme from './config/theme';
 import SideNav from './component/SideNav';
 import AppHeader from './component/AppHeader';
-import {Box} from '@mui/material';
+import { Box } from '@mui/material';
 import { ProSidebarProvider } from 'react-pro-sidebar';
 import { BrowserRouter } from 'react-router-dom';
 import AppRoutes from './router/AppRoutes';
 function App() {
   return (
-   
+
     <React.Fragment>
       <ThemeProvider theme={theme}>
         <ProSidebarProvider>
-        <CssBaseline />
-        <AppHeader />
-        
-      <Box sx={styles.container}>
-      <BrowserRouter>
-        <SideNav/>
-        <Box component={'main'} sx={styles.mainSection}>     
-        </Box>
-        <AppRoutes/>
-        </BrowserRouter>
-      </Box>
+          <CssBaseline />
+          <AppHeader />
+
+          <Box sx={styles.container}>
+            <BrowserRouter>
+              <SideNav />
+              <Box component={'main'} sx={styles.mainSection}>
+              </Box>
+              <AppRoutes />
+            </BrowserRouter>
+          </Box>
         </ProSidebarProvider>
 
       </ThemeProvider>

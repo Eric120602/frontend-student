@@ -1,14 +1,14 @@
-import { Typography,Box } from "@mui/material";
-import MyCalendar from "../component/MyCalendar";
+import { Typography, Box } from "@mui/material";
+import MyCalendar from "../component/Calendar";
 function Timeschedule() {
-    return ( 
-        
+    return (
+
         <Typography>
             <Box sx={styles.details}>
-            <MyCalendar/>
+                <MyCalendar />
             </Box>
         </Typography>
-     );
+    );
 }
 
 export default Timeschedule;
@@ -19,10 +19,11 @@ export default Timeschedule;
 
 const styles = {
     details: {
-        display:"grid",
-        position:"absolute",
-        left:280,
-        height:"95vh",
-         width:"70vw",
-  
-    }}
+        display: "grid",
+        position: "absolute",
+        left: 280,
+        height: "95vh",
+        width: "70vw",
+
+    }
+}

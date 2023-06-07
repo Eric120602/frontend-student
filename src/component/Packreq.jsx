@@ -1,21 +1,16 @@
 import { useState,useEffect } from 'react';
 
-
 const Dropdown = () => {
     
         const [inputValue, setInputValue] = useState('');
-      
         const handleInputChange = (event) => {
           setInputValue(event.target.value);
         };
 
-        
-            const [selectedOption, setSelectedOption] = useState('');
-          
+            const [selectedOption, setSelectedOption] = useState('');   
             const handleSelectChange = (event) => {
               setSelectedOption(event.target.value);
             };
-
 
   return (
     <div>
