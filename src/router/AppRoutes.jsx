@@ -18,10 +18,10 @@ const LoginRoute = ifLoggedOut(Login)
 const AppRoutes = () => {
     return <Routes>
         <Route path='/home' element={<HomeRoute/>} />
-        <Route path='/Home/buypack' element={<BuyPackRoute/>} />
+        <Route path='/home/buypack' element={<BuyPackRoute/>} />
         <Route path='/trainer/info' element={<TrainerdetailsRoute/>} />
         <Route path='/schedule' element={<ScheduleRoute/>} />
-        <Route path='/Learnerdetails' element={<LearnerdetailsRoute/>} />
+        <Route path='/learnerdetails' element={<LearnerdetailsRoute/>} />
         <Route path='/login' element={<LoginRoute/>} />
     </Routes>
 };

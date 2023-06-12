@@ -1,56 +1,116 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
-import { getVehicles } from '../api/vehicles';
+import { getAvailableVehicleTypesForScheduling, getAvailableVehiclesInSession } from '../api/vehicles';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import Button from '@mui/material/Button';
+import { getLeaves, getSchedule, submitBookSession } from '../api/schedule';
+import AlertScreen from './AlertScreen';
 
 const localizer = momentLocalizer(moment);
 
+const fnOrAnMap = {
+  FN: {
+    start: "09:00:00 AM",
+    end: "01:00:00 PM"
+  },
+  AN: {
+    start: "02:00:00 PM",
+    end: "06:00:00 PM"
+  }
+}
+
+const eventColors = {
+  bookedSession: 'blue',
+  leave: 'grey',
+};
+
+const eventStyleGetter = (event) => {
+  const color = eventColors[event.type] || 'blue'; 
+  const style = {
+    backgroundColor: color,
+    borderRadius: '4px',
+    opacity: 0.8,
+    color: 'black',
+    border: 'none',
+    display: 'block',
+  };
+  return {
+    style,
+  };
+};
+
 const MyCalendar = () => {
-  const [two_wheeler, setTwoWheeler] = useState([]);
   const [events, setEvents] = useState([]);
   const [isScheduling, setIsScheduling] = useState(false);
-  const [currentEvent, setCurrentEvent] = useState({
-    start: null,
-    end: null,
-    title: ''
-  });
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedSession, setSelectedSession] = useState("");
   const [selectedType, setSelectedType] = useState('');
+  const [selectedVehicle, setSelectedVehicle] = useState('');
   const [availableVehicles, setAvailableVehicles] = useState([]);
+  const [vehicleTypeOptions, setVehicleTypeOptions] = useState([]);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertColor, setAlertColor] = useState("");
 
   useEffect(() => {
-    loadVehicles();
-  }, [1]);
+    loadVehicleTypeOptions();
+    loadEvents()
+  }, []);
 
-  const loadVehicles = async () => {
-    console.log('Ethi');
+  const loadEvents = async () => {
+    const leaves = await getLeaves()
+    let events = []
+    leaves.map((leave) => {
+      events.push({
+        title: `Holiday: ${leave.fnOrAn}`,
+        start: new Date(leave.day+" " + fnOrAnMap[leave.fnOrAn].start),
+        end: new Date(leave.day+" " + fnOrAnMap[leave.fnOrAn].end),
+        type: "leave"
+      })
+    })
+    const schedule = await getSchedule()
+    schedule.map((session) => {
+      events.push({
+        title: `Session: ${session.session} - ${session.modelName}`,
+        start: new Date(session.date+" " + fnOrAnMap[session.session].start),
+        end: new Date(session.date+" " + fnOrAnMap[session.session].end),
+        type: "bookedSession"
+      })
+    })
+    setEvents(events)
+  }
+
+  const loadVehicleTypeOptions = async () => {
     try {
-      const response = await getVehicles();
-      console.log(response)
-      for (let i = 0; i < response.length; i++) {
-        if (response[i].type === 4) {
-          two_wheeler.push(response[i].model_name);
-          console.log("helloooo", two_wheeler);
-        }
-      }
-    } catch (error) {
-      console.log('Unexpected error occurred', error);
+      let vehicleTypeOptions = await getAvailableVehicleTypesForScheduling()
+      setVehicleTypeOptions(vehicleTypeOptions)
     }
+    catch (exception) {
+      console.log("An unexpected error occured during vehicle type options loading: ", exception)
+    }
+  }
+
+  const handleDateClick = ({ start }) => {
+    if (!isScheduling) {
+      setIsScheduling(true);
+    }
+    setSelectedDate(moment(start).format("YYYY-MM-DD"))
+  }
+
+  const handleChangeSession = (event) => {
+    setSelectedSession(event.target.value);
   };
 
-
-  // Sample data for available vehicles based on type
-  const vehicleOptions = {
-    2: "two wheeler",
-    3: "three wheeler",
-    4: "four wheeler",
-    5: "Heavy",
-  };
-
-  const handleTypeChange = (e) => {
-
+  const handleVehicleTypeChange = (e) => {
     const type = e.target.value;
-    console.log(type);
     setSelectedType(type);
     loadVehicleOptions(type)
   };
@@ -58,122 +118,128 @@ const MyCalendar = () => {
   const loadVehicleOptions = async (vehicleTypeId) => {
     try {
       let params = {}
-      if (vehicleTypeId)
-        params.category = vehicleTypeId
-      let vehicleOptions = await getVehicles(params)
+      params.vehicleType = vehicleTypeId
+      params.date = selectedDate
+      params.time = selectedSession
+      let vehicleOptions = await getAvailableVehiclesInSession(params)
       setAvailableVehicles(vehicleOptions);
     }
     catch (exception) {
-      console.log("error", exception)
+      console.log("An unexpected error occured during vehicle options loading: ", exception)
     }
   }
 
-
-
-  const handleSelectSlot = ({ start, end }) => {
-    if (!isScheduling) {
-      setIsScheduling(true);
-      setCurrentEvent({
-        start,
-        end,
-        title: ''
-      });
-    }
-  };
-
-  const handleInputChange = (event) => {
-    setCurrentEvent((prevEvent) => ({
-      ...prevEvent,
-      title: event.target.value,
-    }));
-  };
-
   const handleVehicleChange = (e) => {
-    const selectedVehicle = e.target.value;
-    setCurrentEvent((prevEvent) => ({
-      ...prevEvent,
-      title: prevEvent.title + "," + selectedVehicle,
-    }));
+    setSelectedVehicle(e.target.value);
   };
 
+  const flashAlert = (alertColor, alertMessage) => {
+    setAlertColor(alertColor)
+    setAlertMessage(alertMessage)
+    setTimeout(() => {
+      setAlertColor("")
+      setAlertMessage("")
+    }, 1500);
+  }
 
-  //calendar events refresh avane fn ()
-  const handleNext = () => {
-    if (currentEvent.title.trim() === '') {
-      alert('Please enter an event title.');
-    } else {
-      setEvents((prevEvents) => [...prevEvents, currentEvent]);  //leave api and schedule use effectil undkaiyt ivide addanam
+  const bookSession = async () => {
+    try {
+      const body = {
+        date: selectedDate,
+        time: selectedSession
+      }
+      await submitBookSession(selectedVehicle, body)
       setIsScheduling(false);
-      setCurrentEvent({
-        start: null,
-        end: null,
-        title: '',
-      });
+      setSelectedDate("");
+      setSelectedSession("");
+      setSelectedType('');
+      setSelectedVehicle('');
+      setAvailableVehicles([]);
+      flashAlert("success", "A session was completely booked")
+      loadEvents()
+    }
+    catch (exception) {
+      console.log("An unexpected error occured during booking session: ", exception)
+      flashAlert("error", "An unexpected error occured while booking.")
     }
   };
-
-  const vehicleTypes = Object.keys(vehicleOptions);
 
   return (
     <div>
-      <h1>My Calendar</h1>
+      <AlertScreen alertColor={alertColor} alertMessage={alertMessage} />
+      <h1>Schedule</h1>
       <Calendar
         localizer={localizer}
         selectable
         events={events}
-        onSelectSlot={handleSelectSlot}
+        onSelectSlot={handleDateClick}
         style={{ height: 500 }}
+        eventPropGetter={eventStyleGetter}
       />
 
-      {isScheduling && (
+      {
+        isScheduling &&
         <div>
-          <h2>Schedule Event</h2>
-          <label>
-            Event Title:
-            <br />
-            <input
-              id='morning'
-              name="session"
-              type="radio"
-              value="morning"
-              onChange={handleInputChange}
-            /><label for="morning">Morning</label><br />
-
-            <input
-              id='evening'
-              name="session"
-              type="radio"
-              value="Evening"
-              onChange={handleInputChange}
-            /><label for="evening">Evening</label><br />
-          </label>
+          <FormControl>
+            <FormLabel id="session-controlled-radio-buttons-group">Session</FormLabel>
+            <RadioGroup
+              aria-labelledby="session-controlled-radio-buttons-group"
+              name="controlled-radio-buttons-group"
+              value={selectedSession}
+              onChange={handleChangeSession}
+            >
+              <FormControlLabel value="FN" control={<Radio />} label="Morning" />
+              <FormControlLabel value="AN" control={<Radio />} label="Afternoon" />
+            </RadioGroup>
+          </FormControl>
+          {
+            selectedSession && (vehicleTypeOptions.length > 0 ?
+              <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="vehicle-type-simple-select-label">Vehicle Type</InputLabel>
+                <Select
+                  labelId="vehicle-type-simple-select-label"
+                  id="vehicle-type-simple-select"
+                  value={selectedType}
+                  label="Vehicle Type"
+                  onChange={handleVehicleTypeChange}
+                >
+                  {
+                    vehicleTypeOptions.map((type) => {
+                      return <MenuItem value={type.id} key={type.id}>{type.name}</MenuItem>
+                    })
+                  }
+                </Select>
+              </FormControl> :
+              <h5>Buy a package to schedule sessions</h5>)
+          }
+          {
+            selectedType && (availableVehicles.length > 0 ?
+              <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="vehicle-type-simple-select-label">Vehicle</InputLabel>
+                <Select
+                  labelId="vehicle-simple-select-label"
+                  id="vehicle-simple-select"
+                  value={selectedVehicle}
+                  label="Vehicle"
+                  onChange={handleVehicleChange}
+                >
+                  {
+                    availableVehicles.map((vehicle) => {
+                      return <MenuItem value={vehicle.id} key={vehicle.id}>{vehicle.modelName}</MenuItem>
+                    })
+                  }
+                </Select>
+              </FormControl> :
+              <h5>No vehicles of this type are available for this session</h5>)
+          }
+          {
+            selectedVehicle && (
+              <Button variant="contained" color="success" sx={{margin: "20px"}} onClick={bookSession}>
+                Book Session
+              </Button>
+            )}
         </div>
-      )}
-
-      <label htmlFor="type">Select Vehicle Type:</label>
-      <select id="type" value={selectedType} onChange={handleTypeChange}>
-        <option value="">Select Type</option>
-        {vehicleTypes.map((type) => (
-          <option key={type} value={type}>
-            {vehicleOptions[type]}
-          </option>
-        ))}
-      </select>
-
-      {selectedType && (
-        <div>
-          <label htmlFor="vehicle">Select Vehicle:</label>
-          <select id="vehicle" value={currentEvent.vehicle ? currentEvent.vehicle.id : ""} onChange={handleVehicleChange}>
-            <option value="">Select Vehicle</option>
-            {availableVehicles.map((vehicle) => (
-              <option key={vehicle.id} value={vehicle.id}>
-                {vehicle.model_name}
-              </option>
-            ))}
-          </select>
-          <button onClick={handleNext}>Next</button>
-        </div>
-      )}
+      }
     </div>
   );
 };

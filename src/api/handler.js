@@ -2,7 +2,7 @@ import { setLogin } from "../session/session";
 
 
 const APIUrl = "http://localhost:5000"
-export default async function handler(method, url, body = {}) {
+export default async function handler(method, url, body = {}, params) {
   let request = {
     method: method,
     headers: {
@@ -15,8 +15,18 @@ export default async function handler(method, url, body = {}) {
     request.headers['Content-Type'] = 'application/json'
     request.body = JSON.stringify(body)
   }
-  const response = await fetch(APIUrl + url, request);
-  if(response.status === 401) {
+
+  let queryParams = ""
+  if (params) {
+    let queryParamsProperties = []
+    for (const property in params) {
+      queryParamsProperties.push(`${property}=${params[property]}`)
+    }
+    queryParams = "?" + queryParamsProperties.join("&")
+  }
+
+  const response = await fetch(APIUrl + url + queryParams, request);
+  if (response.status === 401) {
     setLogin("0");
     localStorage.removeItem("trainee-auth-token")
     window.location.replace(
