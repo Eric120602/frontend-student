@@ -1,12 +1,11 @@
-import { Box, Typography, useTheme } from '@mui/material';
-import { Menu, MenuItem, Sidebar, useProSidebar } from "react-pro-sidebar";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Typography, useTheme } from '@mui/material';
+import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import HomeIcon from '@mui/icons-material/Home';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 function SideNav() {
-    const { collapsed } = useProSidebar();
+    // const { collapsed } = useProSidebar();
     const theme = useTheme();
     return <Sidebar
         style={{ height: "100%", top: 'auto' }}
@@ -15,13 +14,13 @@ function SideNav() {
     >
 
         <Menu>
-            <MenuItem active component={<Link to="/Home" />} icon={<HomeIcon />}>
+            <MenuItem active component={<Link to="/home" />} icon={<HomeIcon />}>
                 <Typography variant="body 2">Home</Typography>
             </MenuItem>
-            <MenuItem active component={<Link to="/Trainerdetails" />} icon={<SupervisorAccountIcon />}>
+            <MenuItem active component={<Link to="/trainer/info" />} icon={<SupervisorAccountIcon />}>
                 <Typography variant="body 2">Trainer Details</Typography>
             </MenuItem>
-            <MenuItem active component={<Link to="/Schedule" />} icon={<AccessTimeFilledIcon />}>
+            <MenuItem active component={<Link to="/schedule" />} icon={<AccessTimeFilledIcon />}>
                 <Typography variant="body 2">Schedule</Typography>
             </MenuItem>
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { CssBaseline, ThemeProvider, Typography } from '@mui/material'
+import { CssBaseline, ThemeProvider } from '@mui/material'
 import './App.css'
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -12,23 +12,26 @@ import { Box } from '@mui/material';
 import { ProSidebarProvider } from 'react-pro-sidebar';
 import { BrowserRouter } from 'react-router-dom';
 import AppRoutes from './router/AppRoutes';
+import { checkLogin } from './session/session';
 function App() {
   return (
 
     <React.Fragment>
       <ThemeProvider theme={theme}>
         <ProSidebarProvider>
-          <CssBaseline />
-          <AppHeader />
-
-          <Box sx={styles.container}>
-            <BrowserRouter>
-              <SideNav />
+          <BrowserRouter>
+            <CssBaseline />
+            <AppHeader />
+            <Box sx={styles.container}>
+              {
+                checkLogin() &&
+                <SideNav />
+              }
               <Box component={'main'} sx={styles.mainSection}>
               </Box>
               <AppRoutes />
-            </BrowserRouter>
-          </Box>
+            </Box>
+          </BrowserRouter>
         </ProSidebarProvider>
 
       </ThemeProvider>

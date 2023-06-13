@@ -12,3 +12,8 @@ export const buyThePack = (body) => {
     const url = `/packages/type/payment/notify`
     return handler("POST", url, body)
 }
+
+export const loginUser = (body) => {
+    const url = `/trainees/login`
+    return handler("POST", url, body)
+}

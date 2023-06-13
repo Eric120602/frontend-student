@@ -26,7 +26,7 @@ const BuyPack = () => {
         transactionId: inputValue,
         vehicleType: selectedOption,
       })
-      window.location.replace('http://localhost:5174/Home');
+      window.location.replace('/home');
     }
     catch (exception) {
       console.log("failed", exception)
