@@ -14,6 +14,7 @@ import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import { getLeaves, getSchedule, submitBookSession } from '../api/schedule';
 import AlertScreen from './AlertScreen';
+import APIError from '../api/error';
 
 const localizer = momentLocalizer(moment);
 
@@ -34,7 +35,7 @@ const eventColors = {
 };
 
 const eventStyleGetter = (event) => {
-  const color = eventColors[event.type] || 'blue'; 
+  const color = eventColors[event.type] || 'blue';
   const style = {
     backgroundColor: color,
     borderRadius: '4px',
@@ -48,9 +49,21 @@ const eventStyleGetter = (event) => {
   };
 };
 
+const dayStyleGetter = (day) => {
+  const style = {}
+  if (moment(day).isBefore(moment().startOf('day'))) {
+    style.backgroundColor = "#d6cece"
+  } else if (moment(day).format('ddd') === 'Sun') {
+    style.backgroundColor = "#dadbf0"
+  }
+  return {
+    style
+  }
+}
+
 const MyCalendar = () => {
   const [events, setEvents] = useState([]);
-  const [isScheduling, setIsScheduling] = useState(false);
+  const [mode, setMode] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedSession, setSelectedSession] = useState("");
   const [selectedType, setSelectedType] = useState('');
@@ -59,6 +72,11 @@ const MyCalendar = () => {
   const [vehicleTypeOptions, setVehicleTypeOptions] = useState([]);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertColor, setAlertColor] = useState("");
+  const [message, setMessage] = useState("");
+  const [availableSessions, setAvailableSessions] = useState({
+    "FN": "Morning",
+    "AN": "Afternoon"
+  });
 
   useEffect(() => {
     loadVehicleTypeOptions();
@@ -71,18 +89,21 @@ const MyCalendar = () => {
     leaves.map((leave) => {
       events.push({
         title: `Holiday: ${leave.fnOrAn}`,
-        start: new Date(leave.day+" " + fnOrAnMap[leave.fnOrAn].start),
-        end: new Date(leave.day+" " + fnOrAnMap[leave.fnOrAn].end),
-        type: "leave"
+        start: new Date(leave.day + " " + fnOrAnMap[leave.fnOrAn].start),
+        end: new Date(leave.day + " " + fnOrAnMap[leave.fnOrAn].end),
+        type: "leave",
+        session: leave.fnOrAn
       })
     })
+
     const schedule = await getSchedule()
     schedule.map((session) => {
       events.push({
         title: `Session: ${session.session} - ${session.modelName}`,
-        start: new Date(session.date+" " + fnOrAnMap[session.session].start),
-        end: new Date(session.date+" " + fnOrAnMap[session.session].end),
-        type: "bookedSession"
+        start: new Date(session.date + " " + fnOrAnMap[session.session].start),
+        end: new Date(session.date + " " + fnOrAnMap[session.session].end),
+        type: "bookedSession",
+        session: session.session
       })
     })
     setEvents(events)
@@ -98,11 +119,27 @@ const MyCalendar = () => {
     }
   }
 
-  const handleDateClick = ({ start }) => {
-    if (!isScheduling) {
-      setIsScheduling(true);
-    }
+  const handleDateClick = ({ start, end }) => {
     setSelectedDate(moment(start).format("YYYY-MM-DD"))
+    if (moment(start).isSameOrAfter(moment().startOf('day')) && (moment(start).format('ddd') !== 'Sun')) {
+      setMode("scheduling");
+      const available = {
+        "FN": "Morning",
+        "AN": "Afternoon"
+      };
+      events.forEach((event) => {
+        if (event.start >= start && event.start < end && event.type === "leave") {
+          delete available[event.session]
+        }
+      })
+      setAvailableSessions(available)
+    } else if (moment(start).format('ddd') !== 'Sun') {
+      setMode("displayMessage");
+      setMessage("Click a future date to schedule sessions")
+    } else {
+      setMode("displayMessage");
+      setMessage("We are not working on Sundays")
+    }
   }
 
   const handleChangeSession = (event) => {
@@ -149,7 +186,7 @@ const MyCalendar = () => {
         time: selectedSession
       }
       await submitBookSession(selectedVehicle, body)
-      setIsScheduling(false);
+      setMode("");
       setSelectedDate("");
       setSelectedSession("");
       setSelectedType('');
@@ -159,8 +196,14 @@ const MyCalendar = () => {
       loadEvents()
     }
     catch (exception) {
-      console.log("An unexpected error occured during booking session: ", exception)
-      flashAlert("error", "An unexpected error occured while booking.")
+      console.log(exception)
+      if (exception instanceof APIError && exception.code === 400) {
+        console.log("An error was returned from API: ", exception.message)
+        flashAlert("error", exception.message)
+      } else {
+        console.log("An unexpected error occured during booking session: ", exception)
+        flashAlert("error", "An unexpected error occured while booking")
+      }
     }
   };
 
@@ -175,21 +218,30 @@ const MyCalendar = () => {
         onSelectSlot={handleDateClick}
         style={{ height: 500 }}
         eventPropGetter={eventStyleGetter}
+        dayPropGetter={dayStyleGetter}
+        popup
       />
 
       {
-        isScheduling &&
+        mode === "scheduling" &&
         <div>
-          <FormControl>
-            <FormLabel id="session-controlled-radio-buttons-group">Session</FormLabel>
+          <FormControl sx={{ m: 1, maxWidth: 320 }}>
+            <FormLabel id="session-controlled-radio-buttons-group">Choose from available slots on {moment(selectedDate).format("dddd, MMMM Do YYYY")} to schedule a session</FormLabel>
             <RadioGroup
               aria-labelledby="session-controlled-radio-buttons-group"
               name="controlled-radio-buttons-group"
               value={selectedSession}
               onChange={handleChangeSession}
             >
-              <FormControlLabel value="FN" control={<Radio />} label="Morning" />
-              <FormControlLabel value="AN" control={<Radio />} label="Afternoon" />
+              {
+                Object.keys(availableSessions).length > 0 ?
+                  Object.keys(availableSessions).map((availableSession) => {
+                    return (
+                      <FormControlLabel key={availableSession} value={availableSession} control={<Radio />} label={availableSessions[availableSession]} />
+                    )
+                  }) :
+                  <h5>The trainer have marked leave for the day</h5>
+              }
             </RadioGroup>
           </FormControl>
           {
@@ -234,10 +286,17 @@ const MyCalendar = () => {
           }
           {
             selectedVehicle && (
-              <Button variant="contained" color="success" sx={{margin: "20px"}} onClick={bookSession}>
+              <Button variant="contained" color="success" sx={{ margin: "20px" }} onClick={bookSession}>
                 Book Session
               </Button>
-            )}
+            )
+          }
+        </div>
+      }
+      {
+        mode === "displayMessage" &&
+        <div>
+          <h5>{message}</h5>
         </div>
       }
     </div>

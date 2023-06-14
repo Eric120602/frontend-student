@@ -1,4 +1,5 @@
 import { setLogin } from "../session/session";
+import APIError from "./error";
 
 
 const APIUrl = "http://localhost:5000"
@@ -35,7 +36,7 @@ export default async function handler(method, url, body = {}, params) {
   }
   if (!response.ok) {
     const error = await response.json()
-    throw new Error(error.errorMessage);
+    throw new APIError(error.errorMessage, response.status);
   }
   return response.json();
 }
