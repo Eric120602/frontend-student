@@ -28,14 +28,16 @@ function App() {
                 <SideNav />
               }
               <Box component={'main'} sx={styles.mainSection}>
+                <AppRoutes />
               </Box>
-              <AppRoutes />
+
             </Box>
           </BrowserRouter>
         </ProSidebarProvider>
 
       </ThemeProvider>
     </React.Fragment>
+
   )
 }
 
@@ -47,7 +49,7 @@ const styles = {
     height: '100%'
   },
   mainSection: {
-    p: 4,
+    //p: 4,
     width: '100%',
     height: '100%',
     overflow: 'auto',

@@ -4,7 +4,7 @@ import { useProSidebar } from "react-pro-sidebar";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { checkLogin, setLogin } from "../session/session";
 import { Link, useNavigate } from "react-router-dom";
-
+import Home from "../homeElements/Home";
 function AppHeader() {
     const { collapseSidebar, toggleSidebar, collapsed, broken } = useProSidebar();
 
@@ -13,7 +13,7 @@ function AppHeader() {
     const logout = () => {
         setLogin("0")
         localStorage.removeItem("trainee-auth-token")
-        navigate("/login")
+        window.location.replace('/home');
     }
 
     return (
@@ -30,11 +30,19 @@ function AppHeader() {
                     sx={styles.appLogo}
                     src="/src/assets/Easy_clutch.png" />
                 <Box sx={{ flexGrow: 1 }} />
-                <Link to="/about">About</Link>
-                <Link to="/contact">Contact</Link>
+                <Box sx={styles.about}>
+                    <Link style={{ color: "white" }} to="/home">Home</Link></Box>
+                <Box sx={{ flexGrow: .1 }} />
+                <Box sx={styles.about}>
+                    <Link style={{ color: "white" }} to="/about">About</Link></Box>
+                <Box sx={{ flexGrow: .1 }} />
+                <Box >
+                    <Link style={{ color: "white" }} to="/contact">Contact</Link></Box>
+                <Box sx={{ flexGrow: .2 }} />
+
                 {
                     checkLogin() &&
-                    <IconButton onClick={logout}title="Sign Out" color="secondary">
+                    <IconButton onClick={logout} title="Sign Out" color="secondary">
                         <Typography>Logout</Typography>
                         <LogoutIcon />
                     </IconButton>
@@ -54,6 +62,11 @@ const styles = {
         height: 50,
         marginLeft: 2,
         cursor: 'pointer'
+    },
+    about: {
+        //width:10,
+        // marginLeft: 10
+
     }
 }
 
