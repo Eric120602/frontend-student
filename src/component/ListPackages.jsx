@@ -6,9 +6,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useState, useEffect } from 'react';
-import { getListpack } from '../api/users';
-import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
+import { createCheckoutSession, listPackages } from '../api/packages';
+import { Button } from '@mui/material';
 
 const Div = styled('div')(({ theme }) => ({
   ...theme.typography.button,
@@ -16,25 +16,36 @@ const Div = styled('div')(({ theme }) => ({
   padding: theme.spacing(1),
 }));
 
-export default function ListPackTable() {
-  const [packs, setPacks] = useState([])
+export default function ListPackages() {
+  const [packages, setPackages] = useState([])
   useEffect(() => {
-    loadpacks()
+    loadPackages()
   }, [])
-  const loadpacks = async () => {
+  const loadPackages = async () => {
     try {
-      const response = await getListpack()
-      setPacks(response)
-
+      const response = await listPackages()
+      setPackages(response)
     }
     catch (error) {
-      console.log("An error occured", error)
+      console.log("An error occured while getting package list: ", error)
+    }
+  }
+
+  const buyPackage = async (id) => {
+    try {
+      const response = await createCheckoutSession(id)
+      window.location.replace(
+        response.url
+      );
+    }
+    catch (error) {
+      console.log("An error occured while creating a checkout session: ", error)
     }
   }
 
   return (
     <TableContainer component={Paper}>
-      <Div>{"Buy Packages"}</Div>
+      <Div>{"Our Packages"}</Div>
       <Table sx={{ minWidth: 550 }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -44,14 +55,14 @@ export default function ListPackTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {packs.map((pack) => (
+          {packages.map((product) => (
             <TableRow
-              key={pack.name}
+              key={product.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row"> {pack.name}</TableCell>
-              <TableCell align="right">{pack.price}</TableCell>
-              <TableCell align="right"><Link to='/Home/buypack'><button>Buy</button></Link></TableCell>
+              <TableCell component="th" scope="row"> {product.name}</TableCell>
+              <TableCell align="right">{product.price}</TableCell>
+              <TableCell align='right'><Button onClick={() => buyPackage(product.id)}>Buy</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>

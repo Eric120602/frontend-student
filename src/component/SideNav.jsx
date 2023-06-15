@@ -17,6 +17,9 @@ function SideNav() {
             <MenuItem active component={<Link to="/home" />} icon={<HomeIcon />}>
                 <Typography variant="body 2">Home</Typography>
             </MenuItem>
+            <MenuItem active component={<Link to="/packages" />} icon={<HomeIcon />}>
+                <Typography variant="body 2">Packages</Typography>
+            </MenuItem>
             <MenuItem active component={<Link to="/trainer/info" />} icon={<SupervisorAccountIcon />}>
                 <Typography variant="body 2">Trainer Details</Typography>
             </MenuItem>

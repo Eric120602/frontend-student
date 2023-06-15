@@ -1,7 +1,6 @@
 import handler from "./handler"
 
 export const getVehicles = (params) => {
-
     return handler("GET", "/vehicles", {}, params)
 }
 
