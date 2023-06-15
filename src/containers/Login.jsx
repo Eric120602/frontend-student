@@ -26,6 +26,7 @@ function Login() {
         catch (exception) {
             console.log("failed", exception)
             setStatus("invalid username or password");
+            setLogin("0");
         }
     };
 

@@ -36,7 +36,7 @@ function Register() {
                     })
                     console.log("verified")
                     alert("Successfully Registered...please login");
-                    window.location.replace('http://localhost:3000/login');
+                    window.location.replace('/login');
                 }
                 catch (e) {
                     console.log("verification failed", e)
