@@ -27,13 +27,13 @@ export default async function handler(method, url, body = {}, params) {
   }
 
   const response = await fetch(APIUrl + url + queryParams, request);
-  if (response.status === 401) {
-    setLogin("0");
-    localStorage.removeItem("trainee-auth-token")
-    window.location.replace(
-      "/login"
-    );
-  }
+  // if (response.status === 401) {
+  //   setLogin("0");
+  //   localStorage.removeItem("trainee-auth-token")
+  //   window.location.replace(
+  //     "/login"
+  //   );
+  // }
   if (!response.ok) {
     const error = await response.json()
     throw new APIError(error.errorMessage, response.status);
