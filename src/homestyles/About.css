@@ -1,0 +1,77 @@
+.about {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+  background: url('../homepic.jpg');
+  background-position: center;
+  background-size: cover;
+}
+
+.aboutTop {
+
+  width: 50vw;
+  height: auto;
+  display: grid;
+  place-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 55%;
+  align-items: center;
+  margin-top: 80px;
+  margin-left: 30px;
+}
+
+.menuItem {
+  border-radius: 15px;
+  width: 300px;
+  height: 350px;
+  margin: 20px;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+}
+
+.aboutBottom {
+  display: flex;
+  flex-direction: column;
+  height: 55%;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.aboutTop p {
+  width: 600px;
+  font-size: 19px;
+  color: rgb(236, 236, 236);
+  text-shadow: 4px 2px 4px rgba(0, 0, 0, 1);
+}
+
+.about .aboutBottom h1 {
+  font-weight: 400;
+  font-size: 70px;
+  color: black;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  transform: translateY(-40px);
+}
+
+@media only screen and (max-width: 1300px) {
+  .aboutTop {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .aboutTop {
+    grid-template-columns: 1fr;
+  }
+}
+
+.img {
+  width: 70vw;
+  height: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  place-items: right;
+}

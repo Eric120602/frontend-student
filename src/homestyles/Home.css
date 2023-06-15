@@ -1,0 +1,167 @@
+ /* .Home {
+    background: url('easyClcar.jpg') ; 
+    background-position: center;
+    background-size: cover;
+    min-height:150vh;
+    width:100%;
+     display: flex;
+    justify-content: center;
+    align-items: left;
+    flex-direction: column;
+    background-repeat: no-repeat;
+    background-color: grey;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif; 
+  } */
+ @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins&display=swap');
+
+
+ .headerContainer {
+   width: auto;
+   margin-left: 50px;
+   color: aliceblue;
+ }
+
+ .headerContainer h1 {
+   justify-content: center;
+   align-items: center;
+   font-size: 3em;
+   font-family: 'Pacifico', cursive;
+   height: 100px;
+   width: 300px;
+   font-weight: 550;
+   color: rgb(182, 170, 170);
+ }
+
+ .headerContainer h2 {
+   justify-content: center;
+   align-items: center;
+   font-size: 45px;
+   text-shadow: 4px 2px 4px rgba(0, 0, 0, 1);
+   height: 60px;
+   font-weight: 50;
+   color: rgb(252, 0, 0);
+ }
+
+ .headerContainer h3 {
+   font-size: 1.3em;
+   color: rgb(218, 143, 50);
+   text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
+   text-align: center;
+   font-family: 'poppins', sans-serif;
+ }
+
+ .headerContainer p {
+   padding: 0;
+   font-size: 25px;
+   font-weight: lighter;
+   color: rgb(255, 255, 255);
+   text-shadow: 4px 2px 4px rgba(0, 0, 0, 1);
+ }
+
+ .headerContainer p1 {
+   font-size: 32px;
+   color: rgb(218, 143, 50);
+   text-align: center;
+   font-family: 'poppins', sans-serif;
+ }
+
+ .headerContainer button {
+   color: black;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   justify-content: center;
+   background-color: #121619;
+   height: 50px;
+   width: 180px;
+   color: white;
+   text-decoration: none;
+   font-size: 20px;
+ }
+
+ .headerContainer button:hover {
+   background-color: #07090a;
+   cursor: pointer;
+   transition: 0.3s ease-in;
+ }
+
+
+ @media only screen and (max-width: 650px) {
+   .home {
+     justify-content: center;
+     align-items: center;
+   }
+
+
+   .headerContainer {
+     margin-left: 0px;
+     border-radius: 10px;
+     padding: 10px;
+     width: 80%;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-direction: column;
+     background-color: #121619;
+     color: white;
+   }
+
+   .headerContainer h1 {
+     font-size: 40px;
+     height: 30px;
+     color: white;
+   }
+
+   .headerContainer h2 {
+     font-size: 30px;
+     height: 30px;
+     color: white;
+   }
+
+   .headerContainer p {
+     font-size: 30px;
+     color: white;
+   }
+
+   .headerContainer p1 {
+     font-size: 30px;
+     color: rgb(129, 9, 9);
+   }
+
+   .headerContainer button {
+     background-color: white;
+     color: #121619;
+     margin-bottom: 30px;
+   }
+
+   .headerContainer button:hover {
+     background-color: rgb(225, 225, 225);
+     color: #121619;
+   }
+ }
+
+ .cont {
+   /*position: relative;*/
+   display: flex;
+   width: 1000px;
+   height: 500px;
+   justify-content: center;
+   align-items: center;
+   border-radius: 40px;
+   /*background-image: linear-gradient(79deg, rgb(201, 95, 240), rgb(235, 154, 241) , rgb(229, 172, 192));*/
+   background: transparent;
+   backdrop-filter: blur(5px);
+ }
+
+ .contan {
+   /*position: relative;*/
+   display: flex;
+   width: 1000px;
+   height: 00px;
+   justify-content: center;
+   align-items: center;
+   border-radius: 40px;
+   /*background-image: linear-gradient(79deg, rgb(201, 95, 240), rgb(235, 154, 241) , rgb(229, 172, 192));*/
+   background: transparent;
+   backdrop-filter: blur(5px);
+ }

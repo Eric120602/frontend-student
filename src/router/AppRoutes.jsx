@@ -1,28 +1,39 @@
 import { Route, Routes } from 'react-router-dom';
-import Home from '../containers/Home';
+import Packages from '../containers/Packages';
 import Schedule from '../containers/Schedule';
-import Learnerdetails from '../containers/Learnerdetails';
-import BuyPack from '../pages/buypack'
-import Trainerdetails from '../containers/Trainerdetails';
+import LearnerDetails from '../containers/Learnerdetails';
+import TrainerDetails from '../containers/Trainerdetails';
 import Login from '../containers/Login';
+import Home from '../homeElements/Home';
 import { ifLoggedIn } from '../hoc/ifLoggedIn';
 import { ifLoggedOut } from '../hoc/ifLoggedOut';
+import Register from '../homeElements/Register';
+import ForgotPassword from '../homeElements/ForgotPassword';
+import Contact from '../homeElements/Contact';
+import About from '../homeElements/About';
 
-const HomeRoute = ifLoggedIn(Home)
-const BuyPackRoute = ifLoggedIn(BuyPack)
-const TrainerdetailsRoute = ifLoggedIn(Trainerdetails)
+
+const PackagesRoute = ifLoggedIn(Packages)
+const TrainerDetailsRoute = ifLoggedIn(TrainerDetails)
 const ScheduleRoute = ifLoggedIn(Schedule)
-const LearnerdetailsRoute = ifLoggedIn(Learnerdetails)
+const LearnerDetailsRoute = ifLoggedIn(LearnerDetails)
 const LoginRoute = ifLoggedOut(Login)
+const RegisterRoute = ifLoggedOut(Register)
+const ForgotPasswordRoute = ifLoggedOut(ForgotPassword)
+
 
 const AppRoutes = () => {
     return <Routes>
-        <Route path='/home' element={<HomeRoute/>} />
-        <Route path='/home/buypack' element={<BuyPackRoute/>} />
-        <Route path='/trainer/info' element={<TrainerdetailsRoute/>} />
-        <Route path='/schedule' element={<ScheduleRoute/>} />
-        <Route path='/learnerdetails' element={<LearnerdetailsRoute/>} />
-        <Route path='/login' element={<LoginRoute/>} />
+        <Route path='/home' element={<Home />} />
+        <Route path='/register' element={<RegisterRoute/>} />
+        <Route path='/forgotPassword' element={<ForgotPasswordRoute />} />
+        <Route path='/contact' element={<Contact />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/packages' element={<PackagesRoute />} />
+        <Route path='/trainer/info' element={<TrainerDetailsRoute />} />
+        <Route path='/schedule' element={<ScheduleRoute />} />
+        <Route path='/learner/info' element={<LearnerDetailsRoute />} />
+        <Route path='/login' element={<LoginRoute />} />
     </Routes>
 };
 

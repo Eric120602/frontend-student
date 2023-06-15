@@ -34,10 +34,10 @@ function Login() {
             <div className="hed">
                 <h3>Easy Clutch</h3>
             </div>
-            <section>
+            <section className='sect'>
                 <div className="fbox">
                     <form >
-                        <h2>Login</h2>
+                        <h2 className='logintitle'>Login</h2>
                         <div className="inbx">
                             <input type="email" required name='username'
                                 onChange={(e) => {
@@ -53,12 +53,12 @@ function Login() {
                             <label>Password</label>
                             <ion-icon name="lock-closed-outline"></ion-icon>
                         </div>
-                        <button onClick={login}>login</button>
+                        <button className="btn" onClick={login}>login</button>
                         <br />
                         <Link to='/forgotPassword' className="reg">Forget password</Link>
                         <br />
                         <Link to='/register' className="reg">sign up</Link>
-                        <p>{status}</p>
+                        <p className='status'>{status}</p>
                     </form>
                 </div>
             </section>
