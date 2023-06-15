@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 
 import ListPackTable from "../component/ListPack"
-function Home() {
+function Traineehome() {
     return (
         <Box sx={styles.columnsContainer}>
             <ListPackTable />
@@ -9,7 +9,7 @@ function Home() {
     );
 }
 
-export default Home;
+export default Traineehome;
 
 /**
  * @type {import("@mui/material").SxProps}

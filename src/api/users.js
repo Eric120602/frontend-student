@@ -17,3 +17,18 @@ export const loginUser = (body) => {
     const url = `/trainees/login`
     return handler("POST", url, body)
 }
+
+export const registerUser = (body) => {
+    const url = `/trainees/register`
+    return handler("POST", url, body)
+}
+
+export const verifyOtp = (body) => {
+    const url = `/trainees/register/verify`
+    return handler("POST", url, body)
+}
+
+export const updatePassword = (body) => {
+    // const url =`/trainees/login/forgotpassword`
+    // return handler("POST", url ,body)
+}

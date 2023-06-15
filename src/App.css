@@ -26,3 +26,213 @@
     font-weight:550;
     cursor:pointer; */
 }
+
+.App {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+  background: url('homepic.jpg');
+  background-position: center;
+  background-size: cover;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.new {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+  background: url('homepic.jpg');
+  background-position: center;
+  background-size: cover;
+  min-height: 100vh;
+  width: 100%;
+
+}
+
+/* 
+.screens-container{
+  background: url('prjpic.jpg') ; 
+    background-position: center;
+    background-size: cover;
+    min-height:150vh;
+    width:100%;
+} */
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+/*@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins&display=swap');*/
+
+.logintitle {
+  font-size: 2em;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  font-family: 'poppins', sans-serif;
+}
+
+/* .logintitle{color:rgb(255, 255, 255);} */
+
+.sect {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+
+  /*background-image: linear-gradient(79deg, greenyellow, lightgreen , lightyellow);*/
+}
+
+.all {
+  background: url('prjpic.jpg');
+  background-position: center;
+  background-size: cover;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.inbx {
+  position: relative;
+  margin: 25px;
+  width: 310px;
+  border-bottom: 2px solid rgb(239, 84, 110);
+}
+
+.inbx label {
+  position: absolute;
+  top: 70%;
+  left: 5px;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 1em;
+  pointer-events: none;
+  transition: .5s;
+}
+
+input:focus~label,
+input:valid~label {
+  top: 10px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000000s ease-in-out 0s;
+  -webkit-text-fill-color: white;
+
+}
+
+.inbx input {
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1.1em;
+  padding: 25px 35px 0 5px;
+  color: white;
+}
+
+.inbx ion-icon {
+  position: absolute;
+  right: 10px;
+  font-size: 1.2em;
+  top: 25px;
+  color: white;
+}
+
+.fbox {
+  /*position: relative;*/
+  display: flex;
+  width: 500px;
+  height: 450px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 40px;
+  /*background-image: linear-gradient(79deg, rgb(201, 95, 240), rgb(235, 154, 241) , rgb(229, 172, 192));*/
+  background: transparent;
+  backdrop-filter: blur(5px);
+}
+
+.reg {
+  color: rgb(239, 84, 110);
+  /*rgb(255, 170, 0);*/
+  text-decoration: none;
+}
+
+.btn {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  height: 40px;
+  border-radius: 40px;
+  border: none;
+  font-size: 1em;
+  font-weight: 550;
+  cursor: pointer;
+}
+
+.fboxfp {
+  /*position: relative;*/
+  display: flex;
+  width: 500px;
+  height: 500px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 40px;
+  /*background-image: linear-gradient(79deg, rgb(201, 95, 240), rgb(235, 154, 241) , rgb(229, 172, 192));*/
+  background: transparent;
+  backdrop-filter: blur(5px);
+}
+
+
+.fmbox {
+  /*position: relative;*/
+  display: flex;
+  width: 500px;
+  height: 700px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 40px;
+  /*background-image: linear-gradient(79deg, rgb(201, 95, 240), rgb(235, 154, 241) , rgb(229, 172, 192));*/
+  background: transparent;
+  backdrop-filter: blur(5px);
+}
+
+.hed {
+  display: flex;
+  width: 300px;
+  height: 100px;
+  font-family: 'Pacifico', cursive;
+  justify-content: left;
+  background: transparent;
+  font-size: 3em;
+  font-weight: 550;
+  color: rgb(182, 170, 170);
+  position: absolute;
+  top: 5%;
+  left: 25px;
+}
+
+.contact {
+  padding: 0;
+  font-size: 25px;
+  font-weight: lighter;
+  color: rgb(255, 255, 255);
+  text-shadow: 4px 2px 4px rgba(0, 0, 0, 1);
+}
+
+.contact a {
+  color: red;
+  text-decoration: none;
+}
