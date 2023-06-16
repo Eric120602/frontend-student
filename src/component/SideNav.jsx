@@ -3,6 +3,7 @@ import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import HomeIcon from '@mui/icons-material/Home';
+import CommuteIcon from '@mui/icons-material/Commute';
 import { Link } from "react-router-dom";
 function SideNav() {
     // const { collapsed } = useProSidebar();
@@ -17,7 +18,7 @@ function SideNav() {
             <MenuItem active component={<Link to="/home" />} icon={<HomeIcon />}>
                 <Typography variant="body 2">Home</Typography>
             </MenuItem>
-            <MenuItem active component={<Link to="/packages" />} icon={<HomeIcon />}>
+            <MenuItem active component={<Link to="/packages" />} icon={<CommuteIcon />}>
                 <Typography variant="body 2">Packages</Typography>
             </MenuItem>
             <MenuItem active component={<Link to="/trainer/info" />} icon={<SupervisorAccountIcon />}>

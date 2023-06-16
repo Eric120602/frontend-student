@@ -1,9 +1,10 @@
 import { Box } from "@mui/material";
-
+import ActiveSession from "../component/ActiveSession";
 import ListPackages from "../component/ListPackages";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import AlertScreen from "../component/AlertScreen";
+
 
 const useQuery = () => new URLSearchParams(useLocation().search);
 
@@ -34,9 +35,19 @@ function Packages() {
     }
 
     return (
-        <Box sx={styles.columnsContainer}>
-            <AlertScreen alertColor={alertColor} alertMessage={alertMessage} />
-            <ListPackages />
+        <Box >
+            <Box sx={styles.columnsContainer}>
+                <Box sx={styles.columnActive}>
+                    <AlertScreen alertColor={alertColor} alertMessage={alertMessage} />
+                    <ListPackages />
+                </Box>
+            </Box>
+            <br />
+            <Box sx={styles.columnsContainer}>
+                <Box sx={styles.columnActive}>
+                    <ActiveSession />
+                </Box>
+            </Box>
         </Box>
     );
 }
@@ -49,11 +60,19 @@ export default Packages;
 
 const styles = {
     columnsContainer: {
-
         display: "flex",
         align: "center",
+        position: "relative",
+        left: 100,
+        top:25,
+        
+    },
+    columnsActive: {
+        display: "flex",
+        align: "center",
+        position: "relative",
+        top: "10%",
 
-        position: "absolute",
-        left: 280,
+
     }
 }

@@ -30,12 +30,12 @@ const fnOrAnMap = {
 }
 
 const eventColors = {
-  bookedSession: 'blue',
-  leave: 'grey',
+  bookedSession: 'light blue',
+  leave: '#e57373',
 };
 
 const eventStyleGetter = (event) => {
-  const color = eventColors[event.type] || 'blue';
+  const color = eventColors[event.type] || 'light blue';
   const style = {
     backgroundColor: color,
     borderRadius: '4px',

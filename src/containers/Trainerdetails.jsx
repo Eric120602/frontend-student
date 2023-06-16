@@ -6,7 +6,7 @@ function Trainerdetails() {
     <Box sx={styles.details}>
       <Typography>
         <ul type='square'>
-          <li>Name: Xavier Ittan</li>
+          <li>Name: Jose Paul</li>
           <li>Address: Newton Rd, mamalassery</li>
           <li>Ph No: 9966106433</li>
           <li>Licence no:KL17 20210002419</li>
