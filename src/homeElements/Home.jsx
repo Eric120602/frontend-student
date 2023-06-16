@@ -24,9 +24,9 @@ function Home() {
           {/* </div> */}
           {/* <div className="cont"> */}
           <h2>DON'T STOP JUST DRIVE</h2>
-          <p style={{ color: "violet" }}>We Provide the best help</p>
+          <p style={{ color: "wheat" }}>We Provide the best help</p>
           Welcome to our driving school! We're thrilled to have you here. Whether you're a beginner eager to hit the road or looking to polish your driving skills, our experienced instructors are ready to guide you on your journey. Our comprehensive driving lessons, flexible schedules, and personalized training ensure that you receive the best learning experience tailored to your needs. Explore our site to discover our range of services, convenient online booking, and competitive fee packages. Join us today and let's embark on an exciting adventure towards becoming a confident and skilled driver. See you behind the wheel!
-
+        <div className="contan">
           {
             !checkLogin() &&
 
@@ -37,6 +37,7 @@ function Home() {
 
               {/* </div>
         <div className="contan"> */}
+        
               <h3>create a new account</h3>
               <Link to="/register">
                 <button className="btn">register now</button>
@@ -48,8 +49,8 @@ function Home() {
 
               {/* </div> */}
             </>
-          }
-
+          }</div>
+        
           <br></br>
         </div>
 

@@ -44,7 +44,7 @@
 
  .headerContainer h3 {
    font-size: 1.3em;
-   color: rgb(218, 143, 50);
+   color: rgb(252, 0, 0);
    text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
    text-align: center;
    font-family: 'poppins', sans-serif;
@@ -132,6 +132,7 @@
      background-color: white;
      color: #121619;
      margin-bottom: 30px;
+     text-decoration: none;
    }
 
    .headerContainer button:hover {
@@ -155,9 +156,10 @@
 
  .contan {
    /*position: relative;*/
-   display: flex;
-   width: 1000px;
-   height: 00px;
+   display: grid;
+   width: auto;
+   height:auto;
+   
    justify-content: center;
    align-items: center;
    border-radius: 40px;

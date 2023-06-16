@@ -28,6 +28,9 @@ export const verifyOtp = (body) => {
     return handler("POST", url, body)
 }
 
+export const getActivePackage = () => {
+    return handler("GET", "/trainees/bookings")
+}
 export const updatePassword = (body) => {
     // const url =`/trainees/login/forgotpassword`
     // return handler("POST", url ,body)
