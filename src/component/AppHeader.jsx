@@ -13,7 +13,7 @@ function AppHeader() {
     const logout = () => {
         setLogin("0")
         localStorage.removeItem("trainee-auth-token")
-        window.location.replace('/home');
+        window.location.replace('/');
     }
 
     return (
@@ -31,7 +31,7 @@ function AppHeader() {
                     src="/src/assets/Easy_clutch.png" />
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={styles.about}>
-                    <Link style={{ color: "white" }} to="/home">Home</Link></Box>
+                    <Link style={{ color: "white" }} to="/">Home</Link></Box>
                 <Box sx={{ flexGrow: .1 }} />
                 <Box sx={styles.about}>
                     <Link style={{ color: "white" }} to="/about">About</Link></Box>

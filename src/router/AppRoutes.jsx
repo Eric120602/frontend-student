@@ -24,7 +24,7 @@ const ForgotPasswordRoute = ifLoggedOut(ForgotPassword)
 
 const AppRoutes = () => {
     return <Routes>
-        <Route path='/home' element={<Home />} />
+        <Route path='/' element={<Home />} />
         <Route path='/register' element={<RegisterRoute/>} />
         <Route path='/forgotPassword' element={<ForgotPasswordRoute />} />
         <Route path='/contact' element={<Contact />} />

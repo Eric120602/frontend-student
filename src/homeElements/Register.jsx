@@ -6,9 +6,6 @@ import { Link } from 'react-router-dom';
 
 function Register() {
 
-
-
-
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmpassword, setConfirmpassword] = useState("");
@@ -43,33 +40,6 @@ function Register() {
                     alert("Incorrect otp entered");
                 }
 
-
-
-                /*const otp= sendEmail({username: username, firstname: firstnm})
-                console.log(otp);
-                console.log("otp send");
-                let val=Number(window.prompt("Enter the OTP: "));
-                
-                if(val===otp){
-                
-                alert("Successfully registered...please login");
-                window.location.replace('http://localhost:3000/login');
-                //const navigate = useNavigate();
-                //navigate('/login', { replace: true });
-                //<Redirect to='/login' />
-                }
-                else{
-                    alert("Invalid otp entered...");
-                    try{
-                    const rem= removeUser({
-                        username: username
-                    })
-                    console.log("removed",rem)
-                }
-                catch(e){
-                    console.log(e,"delete failed")
-                }
-                }*/
             }
             catch (exception) {
                 console.log("register user req failed")

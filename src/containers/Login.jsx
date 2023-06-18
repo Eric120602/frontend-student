@@ -19,7 +19,7 @@ function Login() {
                 localStorage.setItem("trainee-auth-token", response.token)
                 setLogin("1")
                 setStatus("success");//"login user req success"
-                window.location.replace("/home")
+                window.location.replace("/")
             }
 
         }
