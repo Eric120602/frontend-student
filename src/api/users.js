@@ -31,7 +31,18 @@ export const verifyOtp = (body) => {
 export const getActivePackage = () => {
     return handler("GET", "/trainees/bookings")
 }
+
+export const requestForgotpassword = (body) => {
+    const url =`/forgotpassword`
+    return handler("POST", url, body)
+}
+
 export const updatePassword = (body) => {
-    // const url =`/trainees/login/forgotpassword`
-    // return handler("POST", url ,body)
+     const url =`/forgotpassword/verify`
+     return handler("POST", url ,body)
+}
+
+export const trainerDetails = () => {
+    const url =`/trainer/details`
+    return handler("GET", url)
 }

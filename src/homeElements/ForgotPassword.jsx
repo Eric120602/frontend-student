@@ -1,43 +1,82 @@
 import '../App.css';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { updatePassword } from '../api/users'; 
+import { requestForgotpassword, updatePassword } from '../api/users';
 
 function ForgotPassword() {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const[confirmpassword, setConfirmpassword] = useState("");
-    const[status, setStatus] = useState("");
-    const forgotPass = async (e) => {
+    const [confirmpassword, setConfirmpassword] = useState("");
+    const [status, setStatus] = useState("");
+    const [pstatus, setPstatus] = useState("");
 
-    
-    if(password===confirmpassword) 
-    {
-        try {
-            e.preventDefault();
-            console.log("enter")
-            const response = await updatePassword({
-                username: username,
-                password: password,
-            })
-            console.log("entered",response)
-            if(response){
-            setStatus("success");//"login user req success"
+    const forgotPass = async (e) => {
+        e.preventDefault();
+        if (!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(username)) {
+            alert("Enter a valid email.")
+        }
+        else if (password.length < 8) {
+            alert("Your password must be at least 8 characters.")
+        }
+        else if (!/[A-Z]/.test(password)) {
+            alert("Your password must contain an uppercase letter.")
+        }
+        else if (!/[a-z]/.test(password)) {
+            alert("Your password must contain a lowercase letter.")
+        }
+        else if (!/[0-9]/.test(password)) {
+            alert("Your password must contain a number.")
+        }
+        else if (!/[^a-zA-Z0-9]/.test(password)) {
+            alert("Your password must contain a special characters.")
+        }
+
+        else {
+            if (password === confirmpassword) {
+
+                try {
+                    e.preventDefault();
+                    const userId = await requestForgotpassword({
+                        username: username
+                    })
+                    let val = Number(window.prompt("Enter the OTP: "));
+                    console.log(userId)
+                    try {
+
+                        console.log("enter")
+                        const response = await updatePassword({
+                            id: userId.id,
+                            otp: val,
+                            password: password,
+                        })
+                        console.log("entered", response)
+                        if (response) {
+                            alert("Password reset successfull...please login");
+                            window.location.replace('/login');
+                        }
+
+                    }
+                    catch (exception) {
+                        console.log("failed")
+                        setStatus("invalid");
+                        alert("Incorrect otp entered");
+                    }
+                }
+                catch (e) {
+                    console.log("failed")
+                    setStatus("invalid");
+                }
             }
-            
+            else
+                alert("password does not match");
         }
-        catch (exception) {
-            console.log("failed")
-            setStatus("invalid");
-        }
-    }
     };
 
 
+
+
     return (
-
-
 
         <div className="all">
 
@@ -45,15 +84,12 @@ function ForgotPassword() {
                 <h3>Easy Clutch</h3>
             </div>
 
-
-
-            <section>
-
+            <section className='sect'>
 
                 <div className="fboxfp">
                     <form >
 
-                        <h2>Forgot password</h2>
+                        <h2 className='logintitle'>Forgot password</h2>
 
                         <div className="inbx">
                             <input type="email" required name='username'
@@ -61,16 +97,14 @@ function ForgotPassword() {
                                     setUsername(e.target.value);
                                 }} />
                             <label>Email</label>
-
-                            
                         </div>
 
                         <div className="inbx">
                             <input type="password" required onChange={(e) => {
-                                setPassword(e.target.value);
+                                setPassword(e.target.value); checkEssentials(e)
                             }} />
                             <label>Password</label>
-                            
+
                         </div>
 
                         <div className="inbx">
@@ -78,20 +112,17 @@ function ForgotPassword() {
                                 setConfirmpassword(e.target.value);
                             }} />
                             <label>Confirm Password</label>
-                            
                         </div>
 
-                        <button onClick={forgotPass}>reset</button>
+                        <button className='btn' onClick={forgotPass}>Reset</button>
                         <br />
-                        
                         <Link to='/register' className="reg">sign up</Link>
                         <p>{status}</p>
+
                     </form>
                 </div>
             </section>
-
         </div>
-
 
     );
 }

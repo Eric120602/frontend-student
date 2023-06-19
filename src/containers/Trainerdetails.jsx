@@ -1,9 +1,14 @@
 import { Typography, Box } from "@mui/material";
+import ListTrainers from "../component/ListTrainers";
 
 
 function Trainerdetails() {
   return (
+  <Box>
     <Box sx={styles.details}>
+      <ListTrainers/>
+      </Box>
+      <Box sx={styles.details}>
       <Typography>
         <ul type='square'>
           <li>Name: Jose Paul</li>
@@ -38,7 +43,7 @@ function Trainerdetails() {
           <li>Driver instructor at Rani driving school 2015-present</li>
         </ul>
       </Typography>
-    </Box>
+    </Box></Box>
   );
 }
 
@@ -50,8 +55,10 @@ export default Trainerdetails;
 const styles = {
   details: {
     display: "flex",
-    position: "absolute",
-    left: 280,
+    position: "relative",
+    left: 50,
+    width: "50",
+    align: "center",
 
   }
 }
