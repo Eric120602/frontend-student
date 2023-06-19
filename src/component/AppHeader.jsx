@@ -39,6 +39,10 @@ function AppHeader() {
                 <Box >
                     <Link style={{ color: "white" }} to="/contact">Contact</Link></Box>
                 <Box sx={{ flexGrow: .2 }} />
+                {
+                    checkLogin() &&
+                    <p>{localStorage.getItem("name")}</p>
+                }
 
                 {
                     checkLogin() &&

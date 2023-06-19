@@ -17,6 +17,7 @@ function Login() {
             })
             if (response) {
                 localStorage.setItem("trainee-auth-token", response.token)
+                localStorage.setItem("name", response.name)
                 setLogin("1")
                 setStatus("success");//"login user req success"
                 window.location.replace("/")

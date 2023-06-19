@@ -41,3 +41,8 @@ export const updatePassword = (body) => {
      const url =`/forgotpassword/verify`
      return handler("POST", url ,body)
 }
+
+export const trainerDetails = () => {
+    const url =`/trainer/details`
+    return handler("GET", url)
+}

@@ -12,53 +12,69 @@ function ForgotPassword() {
     const [pstatus, setPstatus] = useState("");
 
     const forgotPass = async (e) => {
+        e.preventDefault();
+        if (!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(username)) {
+            alert("Enter a valid email.")
+        }
+        else if (password.length < 8) {
+            alert("Your password must be at least 8 characters.")
+        }
+        else if (!/[A-Z]/.test(password)) {
+            alert("Your password must contain an uppercase letter.")
+        }
+        else if (!/[a-z]/.test(password)) {
+            alert("Your password must contain a lowercase letter.")
+        }
+        else if (!/[0-9]/.test(password)) {
+            alert("Your password must contain a number.")
+        }
+        else if (!/[^a-zA-Z0-9]/.test(password)) {
+            alert("Your password must contain a special characters.")
+        }
 
-        if (password === confirmpassword) {
-        
-            try {
-                e.preventDefault();
-                const userId = await requestForgotpassword({
-                    username: username
-                })
-                let val = Number(window.prompt("Enter the OTP: "));
-                console.log(userId)
+        else {
+            if (password === confirmpassword) {
+
                 try {
-
-                    console.log("enter")
-                    const response = await updatePassword({
-                        id: userId.id,
-                        otp: val,
-                        password: password,
+                    e.preventDefault();
+                    const userId = await requestForgotpassword({
+                        username: username
                     })
-                    console.log("entered", response)
-                    if (response) {
-                        alert("Password reset successfull...please login");
-                        window.location.replace('/login');
-                    }
+                    let val = Number(window.prompt("Enter the OTP: "));
+                    console.log(userId)
+                    try {
 
+                        console.log("enter")
+                        const response = await updatePassword({
+                            id: userId.id,
+                            otp: val,
+                            password: password,
+                        })
+                        console.log("entered", response)
+                        if (response) {
+                            alert("Password reset successfull...please login");
+                            window.location.replace('/login');
+                        }
+
+                    }
+                    catch (exception) {
+                        console.log("failed")
+                        setStatus("invalid");
+                        alert("Incorrect otp entered");
+                    }
                 }
-                catch (exception) {
+                catch (e) {
                     console.log("failed")
                     setStatus("invalid");
-                    alert("Incorrect otp entered");
                 }
             }
-            catch (e) {
-                console.log("failed")
-                setStatus("invalid");
-            }
+            else
+                alert("password does not match");
         }
     };
 
-    const checkEssentials = async (e) => {
-        if((password.length < 8)&&(!/[A-Z]/.test(password))&&(!/[a-z]/.test(password))&&(!/[0-9]/.test(password))&&(!/[^a-zA-Z0-9]/.test(password))){
-            setPstatus("Your password must be at least at least 8 characters and  contain uppercase and lowercase letters, numbers, and special characters.")
-        }
-        else{
-            setPstatus("");
-        }
-    }
-    
+
+
 
     return (
 
@@ -85,7 +101,7 @@ function ForgotPassword() {
 
                         <div className="inbx">
                             <input type="password" required onChange={(e) => {
-                                setPassword(e.target.value);checkEssentials(e)
+                                setPassword(e.target.value); checkEssentials(e)
                             }} />
                             <label>Password</label>
 
